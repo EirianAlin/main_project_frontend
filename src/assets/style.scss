@@ -1,0 +1,498 @@
+@import "./variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+.wrapper__main {
+  position: relative;
+  min-height: calc(100vh - 106px);
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: $main-bg-color;
+    margin: 0;
+    padding: 0;
+}
+
+.appPage__container {
+  max-width: 88%;
+  margin: 0 auto;
+}
+
+  .task {
+    display: flex;
+    margin: 10px auto;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 30px;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+
+    &.checked {
+        text-decoration: line-through;
+        border-color: transparent;
+        background-color: rgba(255, 255, 255, .5);
+
+        .appPage__tasks {
+          &_round {
+            border-color: transparent;
+
+            &:after {
+            border: 2px solid rgb(38, 38, 38);
+            border-top: none;
+            border-right: none;
+            content: "";
+            height: 5px;
+            left: 5px;
+            position: absolute;
+            top: 5px;
+            transform: rotate(-45deg);
+            width: 10px;
+            z-index: 20;
+            }
+          }
+        }
+
+        &.checked:after {
+            opacity: 1;
+          }
+    }
+
+    .appPage__tasks {
+
+      &_currentTask {
+        padding-left: 10px;
+        font-size: 15px;
+      }
+    }
+
+    .appPage__tasks_round {
+        position: relative;
+        background-color: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+
+        &.urgent {
+            border: 2px solid $urgent-task-color;
+        }
+
+        &.nonUrgent {
+            border: 2px solid $nonUrgent-task-color;
+        }
+      }
+  }
+
+  .appPage {
+
+    &__title {
+    color: #fff;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+
+    &__addTask {
+      left: 10%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 80%;
+      padding-top: 200px;
+      padding-bottom: 20px;
+      margin-right: auto;
+      margin-left: auto;
+
+      &_wrapper {
+        width: 1000px;
+        flex: 1;
+      }
+
+      &_input {
+        width: 100%;
+        border-radius: 30px;
+        padding: 14px;
+        background-color: #fff;
+        border: none;
+        outline: none;
+      }
+
+      &_button {
+        width: 80px;
+      }
+
+      button {
+        background-color: $main-accent-color;
+        font-size: 34px;
+        color: #fff;
+        border-radius: 50%;
+        margin-left: 15px;
+        border: none;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+      }
+
+      &_makeUrgantWrapper {
+        width: 80px;
+      }
+
+      &_makeUrgantText {
+        font-size: 10px;
+        color: #fff;
+        position: relative;
+        left: 38px;
+        top: 4px;
+      }
+
+      &_makeUrgantSlider {
+        position: absolute;
+        top: 22px;
+        right: 64px;
+        display:none;
+      }
+
+      &_makeUrgantSwitch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          width: 32px;
+          height: 17px;
+          left: 42px;
+          bottom: 12px;
+          background-color: #ccc;
+          -webkit-transition: .4s;
+          transition: .4s;
+
+          &:before {
+            position: absolute;
+            content: "";
+            height: 10px;
+            width: 10px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+            
+          }
+        }
+      }
+    }
+}
+  
+
+input:checked + .slider {
+  background-color: $main-accent-color;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px $main-accent-color;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(15px);
+  -ms-transform: translateX(15px);
+  transform: translateX(15px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+  .remove-task-icon {
+     position: absolute;
+     top: 23%;
+     right: 20px;
+     opacity: .4;
+     transition: opacity .4s ease;
+
+     &:hover {
+        opacity: 1;
+     }
+
+     img {
+        max-width: 24px;
+        
+     }
+  }
+
+  .wrapper-stat {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .stat {
+        width: 45%;
+        background-color: rgba(255, 255, 255, .5);
+        border-radius: 10px;
+        padding: 10px;
+
+        h5 {
+          margin-bottom: 10px;
+          font-size: 11px;
+        }
+    }
+  }
+
+  .wrapper-progress {
+    width: 100%;
+    background-color: #fff;
+    height: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+
+    .bar {
+      background-color: $urgent-task-color;
+      height: 100%;
+      transition: width 0.5s ease-in-out;
+    }
+
+    .nonUrgant {
+      background-color: $nonUrgent-task-color;
+    }
+
+  }
+
+  .header {
+
+    &__mainLink {
+      text-decoration: unset;
+    }
+    &__menu {
+      
+        a {
+          color: #fff;
+
+          &:hover {
+            color: $main-accent-color;
+          }
+        }
+      }
+  }
+  
+
+  .mainContainer {
+    background-image: url(../assets/background.jpg);
+
+    &__title {
+      padding-bottom: 10px;
+    }
+
+    &__description {
+      padding-bottom: 50px;
+    }
+  }
+
+ .advantages {
+  
+  padding-left: 30px;
+  padding-right: 30px;
+
+  &__title {
+    padding-top: 30px;
+  }
+
+  &__items {
+    padding-top: 10px;
+  }
+
+  &__item {
+    width: 50%;
+    padding: 20px;
+
+    &_description {
+      margin: auto;
+      width: 50%;
+    }
+  }
+
+  &__details {
+    padding: 20px;
+
+    &_link {
+      color: #fff;
+
+    &:hover {
+      color: $main-accent-color;
+    }
+    }
+  }
+}
+
+.advantagePageContainer {
+  &__title {
+    padding-bottom: 40px;
+  }
+
+  &__wrapper {
+    &_description {
+      padding-top: 30px;
+      width: 35%;
+    }
+
+    &_image {
+
+      img {
+      max-width: 100%;
+      height: 325px;
+      width: 485px;
+    }
+    }
+  }
+}
+
+.advantagePagePoints {
+  padding-bottom: 150px;
+  &__title {
+    padding-top: 100px;
+    padding-bottom: 20px;
+  }
+
+  &__item {
+    width: 50%;
+    padding-top: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    &_description {
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}
+
+.form {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  width: 30%;
+  align-items: center;
+
+  &__title {
+    padding-bottom: 20px;
+  }
+
+  &__points {
+    padding-bottom: 15px;
+  }
+
+  &__button, &__noAccount {
+    padding-top: 15px;
+  }
+
+  &__noAccount {
+    font-size: 12px;
+
+    &_link {
+      color: #fff;
+
+    &:hover {
+      color: $main-accent-color;
+    }
+  }
+}
+}
+
+.formRegister {
+  padding-bottom: 50px;
+  padding-top: 50px;
+  width: 30%;
+  align-items: center;
+}
+
+.footer {
+  height: 50px;
+  background-color: #fff;
+  flex: 0 0 auto;
+
+  &__text {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 767px) {
+  .advantages {
+
+    &__items {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__item {
+      width: 100%;
+
+      &_description {
+        width: 100%;
+      }
+    }
+  }
+  
+  .advantagePageContainer {
+    &__title {
+      padding-bottom: 10px;
+    }
+    &__wrapper {
+      flex-direction: column;
+
+      &_description {
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+      }
+    }
+  }
+
+  .advantagePagePoints {
+
+    &__items {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__item {
+      width: 80%;
+    }
+  }
+
+  .appPage {
+    
+    &__addTask {
+      width: 105%;
+    }
+  }
+
+  .formRegister, .form {
+    width: 50%;
+  }
+}
+  
